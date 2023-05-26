@@ -12,7 +12,7 @@ namespace SPI_ISBNValidator.Controllers
         {
             string input = isbn ?? "";
 
-            ISBNChecker checker = new ISBNChecker();
+            ISBNChecker checker = ISBNChecker.GetInstance();
             checker.CheckISBN(input);
 
             // Return result as JSON
@@ -33,6 +33,8 @@ namespace SPI_ISBNValidator.Controllers
 
     public class ISBNChecker
     {
+        private static ISBNChecker? instance;
+
         private readonly Regex isbn10FormatRegex;
         private readonly Regex isbn13FormatRegex;
 
@@ -86,6 +88,14 @@ namespace SPI_ISBNValidator.Controllers
 
             ISBNFormat = string.Empty;
             FinalISBN = string.Empty;
+        }
+
+        // Public static method to access the singleton instance
+        public static ISBNChecker GetInstance()
+        {
+            instance ??= new ISBNChecker();
+
+            return instance;
         }
 
         public void CheckISBN(string input)
