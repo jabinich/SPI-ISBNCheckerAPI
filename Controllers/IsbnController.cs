@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using System.Text.RegularExpressions;
 
 namespace SPI_ISBNValidator.Controllers
@@ -7,6 +8,7 @@ namespace SPI_ISBNValidator.Controllers
     [Route("api/[controller]")]
     public class IsbnController : Controller
     {
+        [EnableCors]
         [HttpPost]
         public IActionResult ValidateISBN([FromBody] string isbn)
         {
@@ -22,6 +24,7 @@ namespace SPI_ISBNValidator.Controllers
                             isbn = checker.FinalISBN });          
         }
 
+        [EnableCors]
         [HttpGet]
         public IActionResult test()
         {
